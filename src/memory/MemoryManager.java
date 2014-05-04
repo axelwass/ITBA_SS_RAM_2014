@@ -97,7 +97,7 @@ public class MemoryManager {
 		if(previous != null){
 			blocksStarts.remove(previous.start);
 			blocksEnds.remove(previous.end);
-			bins.get(getBlockNumbre(next.getSize(), new OperationInfo())).removeBlock(previous);
+			bins.get(getBlockNumbre(previous.getSize(), new OperationInfo())).removeBlock(previous);
 			block.coalisePrevious(previous);
 		}
 		

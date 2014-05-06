@@ -11,10 +11,15 @@ import randoms.RandomGenerator;
 
 public class Simulation {
 	
-	static long SimulationTime = 100;
+	static long SimulationTime = 1000 * 60 * 60 * 24;
 	
 	long mallocSteps = 0;
 	long freeSteps = 0;
+	
+	int mallocCant = 0;
+	int freeCant = 0;
+	
+	
 	int overflows = 0;
 	double frag = 0;
 	int time= 0;
@@ -22,7 +27,7 @@ public class Simulation {
 	RandomGenerator randoms;
 	MemoryManager manager;
 	
-	PriorityQueue<FreeEvent> frees = new PriorityQueue<>(11, new Comparator<FreeEvent>() {
+	PriorityQueue<FreeEvent> frees = new PriorityQueue<FreeEvent>(11, new Comparator<FreeEvent>() {
 
 		@Override
 		public int compare(FreeEvent o1, FreeEvent o2) {
@@ -45,6 +50,7 @@ public class Simulation {
 				OperationInfo info = new OperationInfo();
 				MemoryBlock block = manager.simulateMalloc(randoms.Esize(), info);
 				mallocSteps += info.steps;
+				mallocCant++;
 				overflows += info.overflow?1:0;
 				if(block != null){
 					frees.add(new FreeEvent(time +randoms.Efree(), block));
@@ -55,6 +61,11 @@ public class Simulation {
 				OperationInfo info = new OperationInfo();
 				manager.simulateFree(frees.poll().block, info);
 				freeSteps += info.steps;
+				freeCant++;
+			}
+			
+			if(time % 1000){
+				
 			}
 		}
 		
@@ -63,6 +74,8 @@ public class Simulation {
 			manager.simulateFree(frees.poll().block, info);
 			freeSteps += info.steps;
 		}
+		
+		System.out.println();
 		
 	}
 	

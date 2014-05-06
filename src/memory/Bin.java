@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class Bin {
-	List<MemoryBlock> blocks = new LinkedList<>();
+	List<MemoryBlock> blocks = new LinkedList<MemoryBlock>();
 
 	private Comparator<MemoryBlock> comparator;
 

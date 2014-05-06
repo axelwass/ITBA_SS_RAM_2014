@@ -7,8 +7,8 @@ import java.util.List;
 public class MemoryManager {
 	
 	private List<Bin> bins = new ArrayList<Bin>();
-	private HashMap<Integer, MemoryBlock> blocksStarts = new HashMap<>();
-	private HashMap<Integer, MemoryBlock> blocksEnds = new HashMap<>();
+	private HashMap<Integer, MemoryBlock> blocksStarts = new HashMap<Integer, MemoryBlock>();
+	private HashMap<Integer, MemoryBlock> blocksEnds = new HashMap<Integer, MemoryBlock>();
 	
 	private int MinSize;
 	private int range;

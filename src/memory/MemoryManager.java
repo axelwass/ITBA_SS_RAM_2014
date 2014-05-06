@@ -2,18 +2,21 @@ package memory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MemoryManager {
 	
 	private List<Bin> bins = new ArrayList<Bin>();
-	private HashMap<Integer, MemoryBlock> blocksStarts = new HashMap<Integer, MemoryBlock>();
-	private HashMap<Integer, MemoryBlock> blocksEnds = new HashMap<Integer, MemoryBlock>();
+	private HashMap<Long, MemoryBlock> blocksStarts = new HashMap<Long, MemoryBlock>();
+	private HashMap<Long, MemoryBlock> blocksEnds = new HashMap<Long, MemoryBlock>();
+	
+	private List<MemoryBlock> used = new LinkedList<MemoryBlock>();
 	
 	private int MinSize;
 	private int range;
 	
-	public MemoryManager(int range, OrderConfiguration order, int MemorySize, int MinSize, OperationInfo info) {
+	public MemoryManager(int range, OrderConfiguration order, long MemorySize, int MinSize, OperationInfo info) {
 		this.MinSize = MinSize;
 		this.range = range;
 		
@@ -37,10 +40,10 @@ public class MemoryManager {
 		addBlock(new MemoryBlock(0, MemorySize), info);
 	}
 	
-	private int getBlockNumbre(int size, OperationInfo info){
+	private int getBlockNumbre(long size, OperationInfo info){
 		
 		int n = 0;
-		for(int i = 1;i<size ;i*=range){
+		for(long i = 1;i<size ;i*=range){
 			n++;
 			info.steps++;
 		}
@@ -79,11 +82,14 @@ public class MemoryManager {
 			addBlock(rest, info);
 		}
 		
+		used.add(block);
 		return block;
 	}
 
 	
 	public void simulateFree(MemoryBlock block, OperationInfo info){
+		used.remove(block);
+		
 		MemoryBlock next = blocksStarts.get(block.end + 1);
 		MemoryBlock previous = blocksEnds.get(block.start - 1);
 		
@@ -102,5 +108,20 @@ public class MemoryManager {
 		}
 		
 		addBlock(block, info);
+	}
+	
+	public HistogramInformation histogram(int range, long mamorySize){
+		HistogramInformation histo = new HistogramInformation(range, mamorySize);
+		for(Bin bin: bins){
+			for(MemoryBlock block: bin.blocks){
+				histo.addUnused(block);
+			}
+		}
+		
+		for(MemoryBlock block: used){
+			histo.addUsed(block);
+		}
+		
+		return histo;
 	}
 }

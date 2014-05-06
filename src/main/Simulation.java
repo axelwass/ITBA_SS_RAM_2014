@@ -11,18 +11,20 @@ import randoms.RandomGenerator;
 
 public class Simulation {
 	
-	static long SimulationTime = 1000 * 60 * 60 * 24;
+	static long SimulationTime = 1000 * 60 * 10;
+	static long MemorySize = 1024 * 1024 * 1024;
+	
 	
 	long mallocSteps = 0;
 	long freeSteps = 0;
 	
-	int mallocCant = 0;
-	int freeCant = 0;
+	long mallocCant = 0;
+	long freeCant = 0;
 	
 	
-	int overflows = 0;
+	long overflows = 0;
 	double frag = 0;
-	int time= 0;
+	long time= 0;
 	
 	RandomGenerator randoms;
 	MemoryManager manager;
@@ -31,7 +33,7 @@ public class Simulation {
 
 		@Override
 		public int compare(FreeEvent o1, FreeEvent o2) {
-			return o1.time - o2.time;
+			return (int)(o1.time - o2.time);
 		}
 		
 	});
@@ -39,11 +41,18 @@ public class Simulation {
 	public Simulation() {
 		System.out.println("start!");
 		OperationInfo createOperationInfo = new OperationInfo();
-		manager = new MemoryManager(32, OrderConfiguration.RANDOM,
-				1024 * 1024 * 1024, 16,createOperationInfo);
+		manager = new MemoryManager(16, OrderConfiguration.LIFO
+				, MemorySize, 16,createOperationInfo);
 		randoms = new RandomGenerator();
 		
 		while(time<SimulationTime){
+			
+			if((time % (1000 * 60))==0){
+				System.out.println("minutes= " + (time / (1000*60)));
+				System.out.println(manager.histogram(16, MemorySize));
+			}
+			
+
 			time++;
 			
 			for(int i =0; i<randoms.Emalloc();i++){
@@ -63,10 +72,6 @@ public class Simulation {
 				freeSteps += info.steps;
 				freeCant++;
 			}
-			
-			if(time % 1000){
-				
-			}
 		}
 		
 		while(!frees.isEmpty() ){
@@ -75,7 +80,11 @@ public class Simulation {
 			freeSteps += info.steps;
 		}
 		
-		System.out.println();
+		System.out.println("malloc steps promedio= " + (mallocSteps / mallocCant));
+		System.out.println("free steps promedio= " + (freeSteps / freeCant));
+		System.out.println("block cant= " + mallocCant + " " + freeCant);
+		System.out.println("overflows= " + overflows);
+		System.out.println("frag promedio= " + (frag / time));
 		
 	}
 	

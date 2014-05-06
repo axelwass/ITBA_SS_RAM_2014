@@ -22,7 +22,7 @@ public class Bin {
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
 
-				return b1.getSize() - b2.getSize();
+				return (int)(b1.getSize() - b2.getSize());
 			}
 
 		};
@@ -36,7 +36,7 @@ public class Bin {
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
 
-				return b2.getSize() - b1.getSize();
+				return (int)(b2.getSize() - b1.getSize());
 			}
 
 		};
@@ -77,7 +77,7 @@ public class Bin {
 		while (iterator.hasNext()) {
 			next = iterator.next();
 			info.steps++;
-			if (comparator.compare(block, next) > 0) {
+			if (comparator.compare(block, next) >= 0) {
 				break;
 			}
 		}

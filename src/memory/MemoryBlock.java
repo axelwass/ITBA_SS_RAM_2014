@@ -1,15 +1,15 @@
 package memory;
 
 public class MemoryBlock {
-	int start;
-	int end;
+	long start;
+	long end;
 	
-	public MemoryBlock(int start, int end) {
+	public MemoryBlock(long start, long end) {
 		this.start = start;
 		this.end = end;
 	}
 	
-	int getSize(){
+	long getSize(){
 		return end-start;
 	}
 

@@ -46,6 +46,7 @@ public class Window extends JFrame{
 			int i = 0;
 			if(histogram != null){
 				for(Entry<HistogramInformation.Class,HistogramInformation.Value> entry: histogram){
+					System.out.println("1: " + (i* (width/histogram.getSize())) + " -3: " + (width/histogram.getSize()) + " -4: " + (((double)(entry.getValue().unused + entry.getValue().used)/(double)memorySize) * height));
 					g2D.drawString("" + entry.getKey().start + " - " + entry.getKey().end, i* (width/histogram.getSize()), 40);
 					g2D.drawRect(i* (width/histogram.getSize()), 40, width/histogram.getSize(),(int)((((double)(entry.getValue().unused + entry.getValue().used)/(double)memorySize)) * (height-100)  ));
 					g2D.fillRect(i++* (width/histogram.getSize()), 40, width/histogram.getSize(),(int)((((double)entry.getValue().used/(double)memorySize)) * (height - 100) ));

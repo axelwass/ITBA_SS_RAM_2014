@@ -46,7 +46,7 @@ public class Simulation {
 	public Simulation() {
 		System.out.println("start!");
 		OperationInfo createOperationInfo = new OperationInfo();
-		manager = new MemoryManager(16, OrderConfiguration.LIFO
+		manager = new MemoryManager(4, OrderConfiguration.RANDOM
 				, MemorySize, 16,createOperationInfo);
 		randoms = new RandomGenerator("./context/samples/vim.json");
 		
@@ -64,6 +64,9 @@ public class Simulation {
 			time++;
 			
 			int mallocs = randoms.Emalloc();
+			if(mallocs>256){
+				System.out.println("EPA! " + mallocs );
+			}
 			for(int i =0; i<mallocs;i++){
 				OperationInfo info = new OperationInfo();
 				MemoryBlock block = manager.simulateMalloc(randoms.Esize(), info);

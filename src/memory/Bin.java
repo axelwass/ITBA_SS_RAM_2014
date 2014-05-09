@@ -5,19 +5,20 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Bin {
-	List<MemoryBlock> blocks = new LinkedList<MemoryBlock>();
+	TreeSet<MemoryBlock> blocks = new TreeSet<MemoryBlock>();
 
-	private Comparator<MemoryBlock> comparator;
+	//private Comparator<MemoryBlock> comparator;
 
-	private Bin() {
-
+	private Bin(Comparator<MemoryBlock> comparator) {
+		blocks = new TreeSet<MemoryBlock>(comparator);
 	}
 
 	static Bin Lifo() {
-		Bin bin = new Bin();
-		bin.comparator = new Comparator<MemoryBlock>() {
+		Bin bin = new Bin(new Comparator<MemoryBlock>() {
 
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
@@ -25,13 +26,12 @@ public class Bin {
 				return (int)(b1.getSize() - b2.getSize());
 			}
 
-		};
+		});
 		return bin;
 	}
 
 	static Bin Fifo() {
-		Bin bin = new Bin();
-		bin.comparator = new Comparator<MemoryBlock>() {
+		Bin bin = new Bin(new Comparator<MemoryBlock>() {
 
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
@@ -39,21 +39,20 @@ public class Bin {
 				return (int)(b2.getSize() - b1.getSize());
 			}
 
-		};
+		});
 		return bin;
 	}
 
 	static Bin Random() {
-		Bin bin = new Bin();
-		bin.comparator = new Comparator<MemoryBlock>() {
+		Bin bin = new Bin(new Comparator<MemoryBlock>() {
 
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
 
-				return 0;
+				return -1;
 			}
 
-		};
+		});
 		return bin;
 	}
 
@@ -71,7 +70,8 @@ public class Bin {
 	}
 
 	void addBlock(MemoryBlock block, OperationInfo info) {
-		ListIterator<MemoryBlock> iterator = blocks.listIterator();
+		blocks.add(block);
+		/*Iterator<MemoryBlock> iterator = blocks.descendingIterator();
 
 		MemoryBlock next;
 		while (iterator.hasNext()) {
@@ -81,7 +81,7 @@ public class Bin {
 				break;
 			}
 		}
-		iterator.add(block);
+		iterator.add(block);*/
 
 	}
 

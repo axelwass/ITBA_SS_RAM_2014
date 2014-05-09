@@ -10,7 +10,7 @@ public class MemoryBlock {
 	}
 	
 	long getSize(){
-		return end-start;
+		return end-start+1;
 	}
 
 	public MemoryBlock splitt(int size, int MinSize) {

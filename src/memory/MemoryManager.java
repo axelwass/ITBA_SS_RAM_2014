@@ -1,9 +1,12 @@
 package memory;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class MemoryManager {
 	
@@ -11,7 +14,15 @@ public class MemoryManager {
 	private HashMap<Long, MemoryBlock> blocksStarts = new HashMap<Long, MemoryBlock>();
 	private HashMap<Long, MemoryBlock> blocksEnds = new HashMap<Long, MemoryBlock>();
 	
-	private List<MemoryBlock> used = new LinkedList<MemoryBlock>();
+	private Set<MemoryBlock> used = new TreeSet<>(new Comparator<MemoryBlock>() {
+
+		@Override
+		public int compare(MemoryBlock b1, MemoryBlock b2) {
+			int difference = (int)(b1.getSize() - b2.getSize());
+			return difference==0?1:difference;
+		}
+
+	});
 	
 	private int MinSize;
 	private int range;
@@ -20,7 +31,7 @@ public class MemoryManager {
 		this.MinSize = MinSize;
 		this.range = range;
 		
-		int n = getBlockNumbre(MemorySize, info)+1;
+		int n = getBlockNumbre(MemorySize+1, info)+1;
 		for(int i=0;i<n;i++){
 			switch (order) {
 			case FIFO:

@@ -1,10 +1,16 @@
 package memory;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-public class HistogramInformation {
+public class HistogramInformation implements Iterable<Entry<HistogramInformation.Class,HistogramInformation.Value>> {
 	
 	HashMap<Class, Value> histogram = new HashMap<Class, Value>();
 	List<Class> classes = new LinkedList<Class>();
@@ -34,6 +40,25 @@ public class HistogramInformation {
 		}
 	}
 	
+	public int getSize(){
+		return classes.size();
+	}
+	
+	@Override
+	public Iterator<Entry<HistogramInformation.Class, HistogramInformation.Value>> iterator() {
+		List<Entry<HistogramInformation.Class, HistogramInformation.Value>> list = new ArrayList<Map.Entry<HistogramInformation.Class, HistogramInformation.Value>>(histogram.entrySet());
+		Collections.sort(list, new Comparator<Entry<HistogramInformation.Class, HistogramInformation.Value>>() {
+
+			@Override
+			public int compare(Entry<Class, Value> o1, Entry<Class, Value> o2) {
+				return (int)(o1.getKey().start -  o2.getKey().start);
+			}
+
+
+		});
+		return list.iterator();
+	}
+	
 	@Override
 	public String toString() {
 		String ret = "\nHistograma:\n";
@@ -43,9 +68,9 @@ public class HistogramInformation {
 		return ret;
 	}
 	
-	private class Class{
-		long start;
-		long end;
+	public class Class{
+		public long start;
+		public long end;
 		
 		public Class(long start, long end) {
 			super();
@@ -88,8 +113,9 @@ public class HistogramInformation {
 		
 	}
 	
-	private class Value{
-		long used = 0;
-		long unused = 0;
+	public class Value{
+		public long used = 0;
+		public long unused = 0;
 	}
+
 }

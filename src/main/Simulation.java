@@ -1,8 +1,11 @@
 package main;
 
+import gui.Window;
+
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+import memory.HistogramInformation;
 import memory.MemoryBlock;
 import memory.MemoryManager;
 import memory.OperationInfo;
@@ -38,31 +41,38 @@ public class Simulation {
 		
 	});
 	
+	Window window = new Window(MemorySize);
+	
 	public Simulation() {
 		System.out.println("start!");
 		OperationInfo createOperationInfo = new OperationInfo();
 		manager = new MemoryManager(16, OrderConfiguration.LIFO
 				, MemorySize, 16,createOperationInfo);
-		randoms = new RandomGenerator();
+		randoms = new RandomGenerator("./context/samples/vim.json");
 		
 		while(time<SimulationTime){
 			
-			if((time % (1000 * 60))==0){
-				System.out.println("minutes= " + (time / (1000*60)));
-				System.out.println(manager.histogram(16, MemorySize));
+			if((time % (1000))==0){
+				System.out.println("seconds= " + (time / (1000)));
+				HistogramInformation histogram = manager.histogram(16, MemorySize);
+				System.out.println(histogram);
+				window.setHistogram(histogram);
+				window.repaint();
 			}
 			
 
 			time++;
 			
-			for(int i =0; i<randoms.Emalloc();i++){
+			int mallocs = randoms.Emalloc();
+			for(int i =0; i<mallocs;i++){
 				OperationInfo info = new OperationInfo();
 				MemoryBlock block = manager.simulateMalloc(randoms.Esize(), info);
 				mallocSteps += info.steps;
 				mallocCant++;
 				overflows += info.overflow?1:0;
 				if(block != null){
-					frees.add(new FreeEvent(time +randoms.Efree(), block));
+					long freeTime = time +randoms.Efree();
+					frees.add(new FreeEvent(freeTime<0?Integer.MAX_VALUE:freeTime, block));
 				}
 			}
 			
@@ -74,15 +84,15 @@ public class Simulation {
 			}
 		}
 		
-		while(!frees.isEmpty() ){
+		/*while(!frees.isEmpty() ){
 			OperationInfo info = new OperationInfo();
 			manager.simulateFree(frees.poll().block, info);
 			freeSteps += info.steps;
-		}
+			freeCant++;
+		}*/
 		
 		System.out.println("malloc steps promedio= " + (mallocSteps / mallocCant));
 		System.out.println("free steps promedio= " + (freeSteps / freeCant));
-		System.out.println("block cant= " + mallocCant + " " + freeCant);
 		System.out.println("overflows= " + overflows);
 		System.out.println("frag promedio= " + (frag / time));
 		

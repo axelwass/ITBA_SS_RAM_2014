@@ -1,5 +1,5 @@
 package memory;
 
 public enum OrderConfiguration {
-LIFO,FIFO,RANDOM;
+BEST,WORST,RANDOM;
 }

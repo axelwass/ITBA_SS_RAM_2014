@@ -11,32 +11,34 @@ import java.util.TreeSet;
 public class Bin {
 	TreeSet<MemoryBlock> blocks = new TreeSet<MemoryBlock>();
 
+	long maxSize = 0;
+	
 	//private Comparator<MemoryBlock> comparator;
 
 	private Bin(Comparator<MemoryBlock> comparator) {
 		blocks = new TreeSet<MemoryBlock>(comparator);
 	}
 
-	static Bin Lifo() {
+	static Bin BestFit() {
 		Bin bin = new Bin(new Comparator<MemoryBlock>() {
 
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
 
-				return (int)(b1.getSize() - b2.getSize());
+				return (int)(b1.getSize() - b2.getSize());//TODO cambiar esto
 			}
 
 		});
 		return bin;
 	}
 
-	static Bin Fifo() {
+	static Bin WorstFit() {
 		Bin bin = new Bin(new Comparator<MemoryBlock>() {
 
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
 
-				return (int)(b2.getSize() - b1.getSize());
+				return (int)(b2.getSize() - b1.getSize());//TODO cambiar esto
 			}
 
 		});
@@ -55,14 +57,26 @@ public class Bin {
 		});
 		return bin;
 	}
+	
+	void updateMax(){
+		for(MemoryBlock block : blocks){
+			maxSize  = Math.max(block.getSize(), maxSize);
+		}
+	}
 
 	MemoryBlock getAndRemoveBlock(int size, OperationInfo info) {
+		if(size>maxSize){
+			return null;
+		}
 		Iterator<MemoryBlock> iterator = blocks.iterator();
 		while (iterator.hasNext()) {
 			MemoryBlock block = iterator.next();
 			info.steps++;
 			if (block.getSize() > size) {
 				iterator.remove();
+				if(block.getSize()>=maxSize){
+					updateMax();
+				}
 				return block;
 			}
 		}
@@ -71,6 +85,8 @@ public class Bin {
 
 	void addBlock(MemoryBlock block, OperationInfo info) {
 		blocks.add(block);
+		
+		maxSize = Math.max(block.getSize(), maxSize);
 		/*Iterator<MemoryBlock> iterator = blocks.descendingIterator();
 
 		MemoryBlock next;
@@ -87,6 +103,9 @@ public class Bin {
 
 	public void removeBlock(MemoryBlock block) {
 		blocks.remove(block);
+		if(block.getSize()>=maxSize){
+			updateMax();
+		}
 		
 	}
 }

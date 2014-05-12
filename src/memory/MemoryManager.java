@@ -34,11 +34,11 @@ public class MemoryManager {
 		int n = getBlockNumbre(MemorySize, info)+1;
 		for(int i=0;i<n;i++){
 			switch (order) {
-			case FIFO:
-				bins.add(Bin.Fifo());
+			case BEST:
+				bins.add(Bin.BestFit());
 				break;
-			case LIFO:
-				bins.add(Bin.Lifo());
+			case WORST:
+				bins.add(Bin.WorstFit());
 				break;
 			case RANDOM:
 				bins.add(Bin.Random());

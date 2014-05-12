@@ -49,7 +49,7 @@ public class Bin {
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
 
-				return -1;
+				return b1.start == b2.start && b1.end == b2.end?0:-1;
 			}
 
 		});

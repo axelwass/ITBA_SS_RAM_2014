@@ -18,8 +18,8 @@ public class MemoryManager {
 
 		@Override
 		public int compare(MemoryBlock b1, MemoryBlock b2) {
-			int difference = (int)(b1.getSize() - b2.getSize());
-			return difference==0?1:difference;
+			int difference = (int)(b2.getSize() - b1.getSize());
+			return difference==0?(int)(b2.start - b1.start):difference;
 		}
 
 	});
@@ -31,7 +31,7 @@ public class MemoryManager {
 		this.MinSize = MinSize;
 		this.range = range;
 		
-		int n = getBlockNumbre(MemorySize+1, info)+1;
+		int n = getBlockNumbre(MemorySize, info)+1;
 		for(int i=0;i<n;i++){
 			switch (order) {
 			case FIFO:
@@ -48,7 +48,7 @@ public class MemoryManager {
 			}
 			
 		}
-		addBlock(new MemoryBlock(0, MemorySize), info);
+		addBlock(new MemoryBlock(0, MemorySize-1), info);
 	}
 	
 	private int getBlockNumbre(long size, OperationInfo info){
@@ -91,6 +91,10 @@ public class MemoryManager {
 		
 		if(rest != null){
 			addBlock(rest, info);
+		}
+		
+		if(block.getSize()>1024*1024){
+			System.out.println(block.getSize());
 		}
 		
 		used.add(block);

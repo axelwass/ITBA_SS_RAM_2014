@@ -50,12 +50,8 @@ public class Window extends JFrame{
 					g2D.drawString("" + entry.getKey().start + " - " + entry.getKey().end, i* (width/histogram.getSize()), 40);
 					g2D.drawRect(i* (width/histogram.getSize()), 40, width/histogram.getSize(),(int)((((double)(entry.getValue().unused + entry.getValue().used)/(double)memorySize)) * (height-100)  ));
 					g2D.fillRect(i++* (width/histogram.getSize()), 40, width/histogram.getSize(),(int)((((double)entry.getValue().used/(double)memorySize)) * (height - 100) ));
-					//g2D.drawRect(0,0,20,250);
-					//g2D.drawRect(20,0,20,250);
-					//g2D.fillRect(0,0,20,140);
 				}
 			}
-			//super.paint(arg0);
 		}
 	}
 	

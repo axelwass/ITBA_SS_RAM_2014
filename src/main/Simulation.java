@@ -46,7 +46,7 @@ public class Simulation {
 	public Simulation() {
 		System.out.println("start!");
 		OperationInfo createOperationInfo = new OperationInfo();
-		manager = new MemoryManager(4, OrderConfiguration.RANDOM
+		manager = new MemoryManager(32, OrderConfiguration.RANDOM
 				, MemorySize, 16,createOperationInfo);
 		randoms = new RandomGenerator("./context/samples/vim.json");
 		

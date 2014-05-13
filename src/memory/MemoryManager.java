@@ -14,6 +14,9 @@ public class MemoryManager {
 	private HashMap<Long, MemoryBlock> blocksStarts = new HashMap<Long, MemoryBlock>();
 	private HashMap<Long, MemoryBlock> blocksEnds = new HashMap<Long, MemoryBlock>();
 	
+	long freeMemory;
+	long memorySize;
+	
 	private Set<MemoryBlock> used = new TreeSet<>(new Comparator<MemoryBlock>() {
 
 		@Override
@@ -31,17 +34,20 @@ public class MemoryManager {
 		this.MinSize = MinSize;
 		this.range = range;
 		
+		this.memorySize = MemorySize;
+		this.freeMemory = MemorySize;
+		
 		int n = getBlockNumbre(MemorySize, info)+1;
 		for(int i=0;i<n;i++){
 			switch (order) {
 			case BEST:
-				bins.add(Bin.BestFit());
+				bins.add(new BestFitBin());
 				break;
 			case WORST:
-				bins.add(Bin.WorstFit());
+				bins.add(null);
 				break;
 			case RANDOM:
-				bins.add(Bin.Random());
+				bins.add(null);
 				break;
 			default:
 				System.out.println("Unimplemented order");
@@ -97,12 +103,14 @@ public class MemoryManager {
 			System.out.println(block.getSize());
 		}
 		
+		freeMemory -= block.getSize();
 		used.add(block);
 		return block;
 	}
 
 	
 	public void simulateFree(MemoryBlock block, OperationInfo info){
+		freeMemory += block.getSize();
 		used.remove(block);
 		
 		MemoryBlock next = blocksStarts.get(block.end + 1);
@@ -125,10 +133,20 @@ public class MemoryManager {
 		addBlock(block, info);
 	}
 	
+	public double getFragmentation(){
+		for(int i = bins.size() - 1;i>=0;i--){
+			long maxSize = bins.get(i).getMaxSize();
+			if( maxSize != 0){
+				return 1- ((double)freeMemory /(double)maxSize); 
+			}
+		}
+		return 0;
+	}
+	
 	public HistogramInformation histogram(int range, long mamorySize){
 		HistogramInformation histo = new HistogramInformation(range, mamorySize);
 		for(Bin bin: bins){
-			for(MemoryBlock block: bin.blocks){
+			for(MemoryBlock block: bin){
 				histo.addUnused(block);
 			}
 		}

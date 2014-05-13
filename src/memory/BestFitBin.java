@@ -16,8 +16,8 @@ public class BestFitBin implements Bin {
 
 			@Override
 			public int compare(MemoryBlock b1, MemoryBlock b2) {
-
-				return (int)(b1.getSize() - b2.getSize());//TODO cambiar esto
+				int difference = (int)(b1.getSize() - b2.getSize());
+				return difference==0?(int)(b1.start - b2.start):difference;
 			}
 
 		});

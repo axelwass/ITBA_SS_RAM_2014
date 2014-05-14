@@ -17,7 +17,7 @@ public class MemoryManager {
 	long freeMemory;
 	long memorySize;
 	
-	private Set<MemoryBlock> used = new TreeSet<>(new Comparator<MemoryBlock>() {
+	private Set<MemoryBlock> used = new TreeSet<MemoryBlock>(new Comparator<MemoryBlock>() {
 
 		@Override
 		public int compare(MemoryBlock b1, MemoryBlock b2) {
@@ -44,7 +44,7 @@ public class MemoryManager {
 				bins.add(new BestFitBin());
 				break;
 			case WORST:
-				bins.add(null);
+				bins.add(new WorstFitBin());
 				break;
 			case RANDOM:
 				bins.add(null);
@@ -137,7 +137,7 @@ public class MemoryManager {
 		for(int i = bins.size() - 1;i>=0;i--){
 			long maxSize = bins.get(i).getMaxSize();
 			if( maxSize != 0){
-				return 1- ((double)freeMemory /(double)maxSize); 
+				return 1- ((double)maxSize/(double)freeMemory); 
 			}
 		}
 		return 0;

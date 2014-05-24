@@ -44,10 +44,10 @@ public class MemoryManager {
 				bins.add(new BestFitBin());
 				break;
 			case WORST:
-				bins.add(null);
+				bins.add(new WorstFitBin());
 				break;
 			case RANDOM:
-				bins.add(null);
+				bins.add(new RandomBin());
 				break;
 			default:
 				System.out.println("Unimplemented order");

@@ -14,7 +14,7 @@ import randoms.RandomGenerator;
 
 public class Simulation {
 	
-	static long SimulationTime = 1000 * 60;
+	static long SimulationTime = 1000 * 60 * 10;
 	static long MemorySize = 1024 * 1024 * 1024;
 	
 	
@@ -46,7 +46,7 @@ public class Simulation {
 	public Simulation() {
 		System.out.println("start!");
 		OperationInfo createOperationInfo = new OperationInfo();
-		manager = new MemoryManager(32, OrderConfiguration.BEST
+		manager = new MemoryManager(32, OrderConfiguration.RANDOM
 				, MemorySize, 16,createOperationInfo);
 		randoms = new RandomGenerator("./context/samples/vim.json");
 		
@@ -79,12 +79,13 @@ public class Simulation {
 				}
 			}
 			
-			while(!frees.isEmpty() && frees.peek().time == time){
+			while(!frees.isEmpty() && frees.peek().time <= time){
 				OperationInfo info = new OperationInfo();
 				manager.simulateFree(frees.poll().block, info);
 				freeSteps += info.steps;
 				freeCant++;
 			}
+			//System.out.println("next free: " + frees.peek().time);
 			
 			frag += manager.getFragmentation();
 		}

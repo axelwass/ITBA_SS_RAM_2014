@@ -1,8 +1,7 @@
 package randoms;
 
-import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Random;
 
 import com.google.gson.Gson;
@@ -17,7 +16,25 @@ public class RandomGenerator {
 		try{
 		Gson gson = new Gson();
 		
-		context = gson.fromJson(new String(Files.readAllBytes(FileSystems.getDefault().getPath(contextPath)),Charset.defaultCharset()), SimulationContext.class);
+		String everything = "";
+		BufferedReader br = new BufferedReader(new FileReader(contextPath));
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        everything = sb.toString();
+	    } finally {
+	        br.close();
+	    }
+		
+		
+		context = gson.fromJson(everything, SimulationContext.class);
+//		context = gson.fromJson(new String(Files.readAllBytes(FileSystems.getDefault().getPath(contextPath)),Charset.defaultCharset()), SimulationContext.class);
 		markovState = context.E_malloc_start;
 		}catch(Exception e){
 			e.printStackTrace();

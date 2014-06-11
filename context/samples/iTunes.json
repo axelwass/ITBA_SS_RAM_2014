@@ -1090,8 +1090,7 @@
     ]
   ], 
   "E_malloc_start": 2,
-  "E_malloc": [
-    2, 
+  "E_malloc": 
     [
       [
         0.0, 

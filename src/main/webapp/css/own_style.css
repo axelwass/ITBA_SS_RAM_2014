@@ -1,0 +1,151 @@
+
+
+img.image {
+ width:250px; 
+ height:250px;
+}
+
+img.pic-on-pic{
+	position:relative;
+	top:-75px; 
+	left:-255px; 
+	width:100px; 
+	height:100px;
+}
+
+img.title{
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
+
+div.main_menu{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px;
+}
+
+div.supermenu{
+    /* text-align: center; */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px;
+}
+
+
+a.mian_menu_button{
+	-webkit-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+	color:#227928;
+	background-color:#E8E53E;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:none;
+	font-family:'Helvetica Neue',Arial,serif;
+	font-size:16px;
+	font-weight:700;
+	height:32px;
+	padding:4px 16px;
+	text-shadow:#FE6 0 1px 0
+}
+
+a.sub_menu_button{
+	-webkit-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+	color:#E8E53E;
+	background-color:#227928;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:none;
+	font-family:'Helvetica Neue',Arial,serif;
+	font-size:16px;
+	font-weight:400;
+	height:32px;
+	padding:4px 16px;
+	text-shadow:#FE6 0 1px 0
+}
+
+.lista {
+	background-color:#227928;
+	height: 51px;
+	margin-bottom: 10px;
+	padding:1px;
+}
+
+.item {
+	background-color: white;
+	height: 49px;
+	width: 49px;
+	float: left;
+	margin-right: 1px;
+	margin-left: 1px;
+	margin-top: 2px;
+	text-align: center;
+}
+
+.item-container {
+	background-color:white;
+	height: 51px;
+	width: 51px;
+}
+
+.img-lancha{
+	height: auto;
+	width: 35px;
+	display: block;
+	margin-left: auto;
+   	margin-right: auto;
+}
+
+div .ship-view-image{
+   float: right;
+	height:150px;
+	width: auto;
+}
+
+
+.factura {
+	width: 6cm;
+	font-family: "Courier New",Helvetica,Arial,sans-serif;
+	border-width: 2px;
+	border-style: solid;
+	border-color: black; 
+}
+
+.only-print {
+    display: none;
+}
+
+@media print {
+   .dont-print {
+       display: none;
+    }
+    .only-print {
+       display: block;
+    }
+    .factura {
+		width: 6cm;
+		font-family: "Courier New",Helvetica,Arial,sans-serif;
+		border-width: 0px;
+		border-style: solid;
+		border-color: black; 
+	}
+	.container {
+	  width: auto;
+	}
+	.container-fluid {
+	    padding-left: 0px;
+	    padding-right: 0px;
+	}
+}
+td.price {
+  text-align: right;
+}
+th.price {
+  text-align: right;
+}

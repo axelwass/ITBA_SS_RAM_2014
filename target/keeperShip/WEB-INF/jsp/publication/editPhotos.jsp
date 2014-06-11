@@ -1,0 +1,38 @@
+<%@ include file="../header.jsp" %>
+
+
+
+	<div class="well">
+	<table style="width: 20%;">
+		<c:forEach items="${publication.photos}" var="photo">	
+			<tr>
+				<td>						
+					<img class="image" src="<c:url value="../photo/view"><c:param name="imageId" value="${photo.id}" /></c:url>" />							
+				</td>				
+				<td>					
+					<form  method="POST" action="deletePhoto">
+						<input type="hidden" name="imageId" value="${photo.id}" />	
+						<input type="hidden" name="publicationId" value="${publication.id}" />			
+						<button type="submit">Eliminar</button>
+					</form>					
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
+	</div>
+	
+	<form:form class="well form-horizontal" method="POST" action="uploadPhoto" enctype="multipart/form-data" commandName="photoForm">
+				<div class="error"><form:errors path="*" /></div>	
+						
+				<input type="hidden" name="publicationId" value="${publication.id}"/>
+				
+				<form:input name="photo" type="file" path="fileData"/>
+				
+				<input type="submit" name="submit" value="Enviar" class="btn" />
+	</form:form>
+	
+	<div class="form-actions">
+				<a href="<c:url value="../user/publications"></c:url>"  class="btn btn-primary">Volver</a>
+	</div>
+	
+<%@ include file="../footer.jsp" %>	

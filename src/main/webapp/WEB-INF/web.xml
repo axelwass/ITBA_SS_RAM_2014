@@ -18,7 +18,7 @@
 
  	<!--<filter>
  		<filter-name>ErrorFilter</filter-name>
- 		<filter-class>keeperShip.filters.ErrorFilter</filter-class>
+ 		<filter-class>ss.filters.ErrorFilter</filter-class>
  	</filter>
  	<filter-mapping> 
  		<filter-name>ErrorFilter</filter-name> 
@@ -60,7 +60,7 @@
 	</filter-mapping>
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
-		<filter-class>keeperShip.filters.EncodingFilter</filter-class>
+		<filter-class>ss.filters.EncodingFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>EncodingFilter</filter-name>
@@ -68,7 +68,7 @@
 	</filter-mapping>
 	<filter>	
 		<filter-name>RestrictedFilter</filter-name>
-		<filter-class>keeperShip.filters.RestrictedFilter</filter-class>
+		<filter-class>ss.filters.RestrictedFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>RestrictedFilter</filter-name>

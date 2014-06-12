@@ -3,10 +3,6 @@ package jetty;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import keeperShip.model.ss.Contexts;
-import keeperShip.model.ss.main.Simulation;
-import keeperShip.model.ss.memory.OrderConfiguration;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -17,6 +13,10 @@ import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
+
+import ss.model.ss.Contexts;
+import ss.model.ss.main.Simulation;
+import ss.model.ss.memory.OrderConfiguration;
 
 public class Start {
 	public static void main(String[] args) throws Exception {
@@ -31,7 +31,7 @@ public class Start {
 			server.setConnectors(new Connector[] { connector });
 			WebAppContext bb = new WebAppContext();
 			bb.setServer(server);
-			bb.setContextPath("/keeperShip");
+			bb.setContextPath("/ss");
 			bb.setWar("src/main/webapp");
 			server.addHandler(bb);
 			try {

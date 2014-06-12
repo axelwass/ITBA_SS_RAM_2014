@@ -256,6 +256,11 @@ public class Simulation implements Runnable {
 					return secondMinFreeBlockSize[i++-2];
 				}
 			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
 		};
 	}
 	

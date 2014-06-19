@@ -41,7 +41,7 @@
 		</property>
 
 		<property name="packagesToScan">
-			<list> <value>ss</value> </list>
+			<list> <value>keeperShip</value> </list>
 		</property>
 
 	</bean>
